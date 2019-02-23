@@ -1,0 +1,47 @@
+<mat-toolbar color="primary">
+    <div><a routerLink="/">MBJETS</a></div>
+    <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
+        <ul fxLayout fxLayoutGap="10px" class="navigation-items">
+            <li><a routerLink="/contact">{{ contactNav }}</a></li>
+            <li><a routerLink="/about">{{ aboutNav }}</a></li>
+            <li><a routerLink="/work">{{ workNav }}</a></li>
+            <li><a routerLink="/rates">{{ ratesNav }}</a></li>
+            <li>
+                <a [matMenuTriggerFor]="language">Language/言語</a>
+                <mat-menu #language="matMenu">
+                    <button mat-menu-item (click)="newLanguageChosen('english')">English</button>
+                    <button mat-menu-item (click)="newLanguageChosen('japanese')">日本語</button>
+                </mat-menu>
+            </li>
+            <li><a routerLink="/thankyou">Test Thank You</a></li>
+        </ul>
+    </div>
+    <div fxHide.gt-xs fxFlex fxLayout fxLayoutAlign="flex-end">
+        <ul fxLayout fxLayoutGap="10px" class="navigation-items">
+            <li>
+                <button mat-icon-button [matMenuTriggerFor]="language" id="toolbar-language-menu">
+                    <span class="nav-caption">Language/言語</span>
+                </button>
+                <mat-menu #language="matMenu">
+                    <button mat-menu-item (click)="newLanguageChosen('english')">English</button>
+                    <button mat-menu-item (click)="newLanguageChosen('japanese')">日本語</button>
+                </mat-menu>
+            </li>
+            <li>
+                <button mat-icon-button (click)="onToggleSidenav()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+            </li>
+        </ul>
+        <!-- <button mat-icon-button [matMenuTriggerFor]="language" id="toolbar-language-menu">
+            <span class="nav-caption">Language/言語</span>
+        </button>
+        <mat-menu #language="matMenu">
+            <button mat-menu-item (click)="newLanguageChosen('english')">English</button>
+            <button mat-menu-item (click)="newLanguageChosen('japanese')">日本語</button>
+        </mat-menu>
+        <button mat-icon-button (click)="onToggleSidenav()">
+            <mat-icon>menu</mat-icon>
+        </button> -->
+    </div>
+</mat-toolbar>

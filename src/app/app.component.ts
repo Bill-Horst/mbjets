@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'bh-translation';
+  setLanguage(language: string) {
+    console.log(language);
+  }
+
+  private currentYear = new Date().getFullYear();
+
+  private copyrightMessage = `Copyright Bill Horst ${this.currentYear}`;
 }

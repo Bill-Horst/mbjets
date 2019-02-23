@@ -1,0 +1,56 @@
+<section>
+    <h1>Technical Rates</h1>
+    <mat-card fxLayout="column" fxLayoutAlign="center center">
+      <p>We specialize in translating documents related to all things tech and here's what we charge:</p>
+      <mat-list>
+        <mat-list-item>Price Tier 1: {{ tier1PriceString }} USD per character (1 ~ {{ tierStructure.tier1.max }} characters)</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>Price Tier 2: {{ tier2PriceString }} USD per character (1001 ~ {{ tierStructure.tier2.max }} characters)</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>Price Tier 3: {{ tier3PriceString }} USD per character (3001 + characters)</mat-list-item>
+      </mat-list>
+    </mat-card>
+  </section>
+  <br />
+  <section>
+    <form [formGroup]="characterCountForm" (ngSubmit)="onSubmit()" class="character-count-form">
+      <mat-card fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
+        <p>Enter the character count of your document below and hit submit to get an estimate.</p>
+        <mat-form-field>
+          <input matInput type="number" placeholder="Character count" formControlName="characterCount">
+          <mat-error>Enter a number</mat-error>
+        </mat-form-field>
+        <button type="submit" mat-raised-button color="accent" [disabled]="characterCountForm.invalid">Submit</button>
+  
+        <div *ngIf="showTable" class="price-table-section">
+          <p>Having {{ characterCountEntered }} characters translated will cost {{ totalCharPriceString }}.</p>
+          <p>Here's the breakdown:</p>
+  
+          <br />
+  
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="tier">
+              <th mat-header-cell *matHeaderCellDef class="price-table-header"> Price Tier </th>
+              <td mat-cell *matCellDef="let element"> {{element.tier}} </td>
+            </ng-container>
+            <ng-container matColumnDef="charCount">
+              <th mat-header-cell *matHeaderCellDef class="price-table-header"> Character Count </th>
+              <td mat-cell *matCellDef="let element"> {{element.charCount}} characters </td>
+            </ng-container>
+            <ng-container matColumnDef="total">
+              <th mat-header-cell *matHeaderCellDef class="price-table-header"> Tier Total </th>
+              <td mat-cell *matCellDef="let element"> {{element.total}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+        <br />
+        <em>- Multiple unrelated documents cannot be combined to qualify for large volume discounted rates.</em>
+        <em>- For estimates over $200, you will receive a work commencement invoice for half the estimated cost before
+          work will be started.</em>
+        <hr />
+  
+      </mat-card>
+    </form>
+  </section>

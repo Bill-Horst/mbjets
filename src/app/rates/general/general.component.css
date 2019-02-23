@@ -1,0 +1,26 @@
+h1 {
+    text-align: center;
+}
+
+mat-divider {
+    width: 400px;
+}
+
+table {
+    width: 100%;
+    text-align: center;
+}
+
+.price-table-header {
+    text-align: center;
+    text-decoration: underline;
+}
+
+tr:last-child td {
+    font-weight: bolder;
+    font-size: 16px;
+}
+
+.price-table-section {
+    width: 100%;
+}
