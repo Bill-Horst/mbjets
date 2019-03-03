@@ -11,9 +11,10 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'about', component: AboutComponent },
-  { path: 'work', component: WorkComponent },
-  { path: 'rates', component: RatesComponent },
-  { path: 'thankyou', component: ThankyouComponent }
+  // commented out route for work section - come back and add it back in if I ever want to display it again
+  // { path: 'work', component: WorkComponent },
+  { path: 'rates', component: RatesComponent }
+  // { path: 'thankyou', component: ThankyouComponent }
 ];
 
 @NgModule({

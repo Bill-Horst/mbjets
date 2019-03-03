@@ -11,21 +11,14 @@
       <mat-icon>info</mat-icon>
       <span class="nav-caption">{{ aboutNav }}</span>
   </a>
-  <a mat-list-item routerLink="/work" (click)="onClose()">
+  <!-- commented out route for work section - come back and add it back in if I ever want to display it again -->
+  <!-- <a mat-list-item routerLink="/work" (click)="onClose()">
     <mat-icon>translate</mat-icon>
     <span class="nav-caption">{{ workNav }}</span>
-  </a>
+  </a> -->
   <a mat-list-item routerLink="/rates" (click)="onClose()">
     <mat-icon>money</mat-icon>
     <span class="nav-caption">{{ ratesNav }}</span>
   </a>
-  <!-- <a mat-list-item [matMenuTriggerFor]="language">
-    <mat-icon>money</mat-icon>
-    <span class="nav-caption">Language/言語<</span>
-  </a> -->
-  <!-- <mat-menu #language="matMenu">
-      <button mat-menu-item (click)="newLanguageChosen('english');onClose()">English</button>
-      <button mat-menu-item (click)="newLanguageChosen('japanese');onClose()">日本語</button>
-  </mat-menu> -->
   
 </mat-nav-list>

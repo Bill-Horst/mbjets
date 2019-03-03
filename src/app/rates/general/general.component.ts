@@ -1,6 +1,5 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { LogicService } from 'src/app/services/logic.service';
 
 @Component({
   selector: 'app-general',
@@ -9,16 +8,16 @@ import { LogicService } from 'src/app/services/logic.service';
 })
 export class GeneralComponent implements OnInit {
 
-  constructor(logicService: LogicService) { }
+  constructor() { }
 
   // the array of tiles for the calculated price
   private calculatedPriceTiles;
 
   // show the grid after button pressed:
-  private showGrid = false;
+  showGrid = false;
 
   // the reactive form for the character count
-  private characterCountForm: FormGroup;
+  characterCountForm: FormGroup;
 
   // for converstion from number units to USD
   private l10nUSD = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" })
@@ -59,7 +58,7 @@ export class GeneralComponent implements OnInit {
   private chargeTierColumnColor: string = '#f2f7ff';
   private charCountColumnColor: string = '#f4f7ff';
 
-  private infoTiles = [
+  infoTiles = [
     { text: 'We don\'t usually do general translations, but when we do, here\'s what we charge:', cols: 10, rows: 1, color: this.gridHeadColor },
 
     { text: 'Price Tier', cols: 2, rows: 1, color: this.priceTierColumnColor },

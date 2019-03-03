@@ -1,21 +1,22 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { LanguageService } from 'src/app/services/language.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-sidenav-list',
   templateUrl: './sidenav-list.component.html',
   styleUrls: ['./sidenav-list.component.css']
 })
-export class SidenavListComponent implements OnInit {
+export class SidenavListComponent implements OnInit, OnDestroy {
 
   private language: string = this.languageService.getLanguage();
-  languageSubscription: any;
+  languageSubscription: Subscription;
 
-  private homeNav: string;
-  private contactNav: string;
-  private aboutNav: string;
-  private workNav: string;
-  private ratesNav: string;
+  homeNav: string;
+  contactNav: string;
+  aboutNav: string;
+  workNav: string;
+  ratesNav: string;
 
   @Output() closeSidenav = new EventEmitter<void>();
   
@@ -61,6 +62,10 @@ export class SidenavListComponent implements OnInit {
       workNav: 'ワーク',
       ratesNav: '値段'
     }
+  }
+
+  ngOnDestroy() {
+    this.languageSubscription.unsubscribe();
   }
 
 }

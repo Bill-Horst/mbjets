@@ -9,3 +9,20 @@ html, body {
 body {
     margin: 0;
 }
+
+.app-page-heading {
+    font-family: calibri;
+    font-size: 45px;
+    text-align: center;
+    padding-top: 20px;
+}
+
+.app-page-secondary-heading {
+    font-family: calibri;
+    font-size: 36px;
+}
+
+body {
+    background-image: url('./assets/images/tree_circuit.jpg');
+    background-size: cover;
+}

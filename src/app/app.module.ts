@@ -15,8 +15,10 @@ import { WorkComponent } from './work/work.component';
 import { RatesComponent } from './rates/rates.component';
 import { GeneralComponent } from './rates/general/general.component';
 import { TechnicalComponent } from './rates/technical/technical.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ThankyouComponent } from './thankyou/thankyou.component';
+import { LanguageService } from './services/language.service';
+import { LogicService } from './services/logic.service';
 
 @NgModule({
   declarations: [
@@ -38,9 +40,10 @@ import { ThankyouComponent } from './thankyou/thankyou.component';
     BrowserAnimationsModule,
     MaterialModule,
     FlexLayoutModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [LanguageService, LogicService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

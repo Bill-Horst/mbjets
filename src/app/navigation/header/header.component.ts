@@ -1,20 +1,21 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { LanguageService } from '../../services/language.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   private language: string = this.languageService.getLanguage();
-  languageSubscription: any;
+  languageSubscription: Subscription;
 
-  private contactNav: string;
-  private aboutNav: string;
-  private workNav: string;
-  private ratesNav: string;
+  contactNav: string;
+  aboutNav: string;
+  workNav: string;
+  ratesNav: string;
 
   @Output() sidenavToggle = new EventEmitter<void>();
 
@@ -57,5 +58,9 @@ export class HeaderComponent implements OnInit {
       workNav: 'ワーク',
       ratesNav: '値段'
     }
+  }
+
+  ngOnDestroy() {
+    this.languageSubscription.unsubscribe();
   }
 }

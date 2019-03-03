@@ -23,4 +23,31 @@ tr:last-child td {
 
 .price-table-section {
     width: 100%;
+    text-align: center;
 }
+
+.show-table-animation {
+    animation: 500ms color-change linear;
+}
+
+/* ANIMATIONS */
+
+@keyframes color-change {
+    0% {
+        width: 0%;
+    }
+    25% {
+        width: 50%;
+    }
+    50% {
+        width: 75%;
+    }
+    75% {
+        width: 90%;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+/* END ANIMATIONS */

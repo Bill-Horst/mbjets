@@ -1,6 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { LogicService } from 'src/app/services/logic.service';
 
 @Component({
   selector: 'app-technical',
@@ -9,34 +8,37 @@ import { LogicService } from 'src/app/services/logic.service';
 })
 export class TechnicalComponent implements OnInit {
 
-  characterCountForm: FormGroup;
+  constructor() { }
 
-  constructor(logicService: LogicService) { }
+  // the array of tiles for the calculated price
+  private calculatedPriceTiles;
+
+  // show the grid after button pressed:
+  showGrid = false;
+
+  // the reactive form for the character count
+  characterCountForm: FormGroup;
 
   // for converstion from number units to USD
   private l10nUSD = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" })
 
-  private showPriceDetails: boolean = false;
+  // private showPriceDetails: boolean = false;
   private characterCountEntered: number;
-  private calculatedPrice: string;
 
-  // private tier1CharPrice;
-  // private tier2CharPrice;
-  // private tier3CharPrice;
-  private totalCharPrice;
+  // used to show the total price in the sentence (not the grid)
   private totalCharPriceString;
 
-  // tier object / pricing info:
+  // tier object / pricing info - this is where all prices and tier limits are set:
   private tierStructure = {
     tier1: {
       name: 'Tier 1',
       price: 12,
-      max: 1000
+      max: 1500
     },
     tier2: {
       name: 'Tier 2',
       price: 10,
-      max: 3000
+      max: 5000
     },
     tier3: {
       name: 'Tier 3',
@@ -45,22 +47,38 @@ export class TechnicalComponent implements OnInit {
     }
   }
 
-  // tier pricing for display in top table:
+  // tier pricing for display in top grid:
   private tier1PriceString: string = this.l10nUSD.format(this.tierStructure.tier1.price / 100);
   private tier2PriceString: string = this.l10nUSD.format(this.tierStructure.tier2.price / 100);
   private tier3PriceString: string = this.l10nUSD.format(this.tierStructure.tier3.price / 100);
 
-  private calculatedPricingStructureDisplay = [];
+  // data grid stuff:
+  private gridHeadColor: string = '#e8f0ff';
+  private priceTierColumnColor: string = '#f8f4ff';
+  private chargeTierColumnColor: string = '#f2f7ff';
+  private charCountColumnColor: string = '#f4f7ff';
 
-  // table stuff:
-  private showTable = false;
-  displayedColumns: string[] = ['tier', 'charCount', 'total'];
-  dataSource = [
-    { tier: 'Tier 1', charCount: 0, total: '0' },
-    { tier: 'Tier 2', charCount: 0, total: '0' },
-    { tier: 'Tier 3', charCount: 0, total: '0' },
-    { tier: 'Total', charCount: 0, total: '0' }
-  ]
+  infoTiles = [
+    { text: 'We specialize in translations related to all things tech and here\'s what we charge:', cols: 10, rows: 1, color: this.gridHeadColor },
+
+    { text: 'Price Tier', cols: 2, rows: 1, color: this.priceTierColumnColor },
+    { text: 'Charge', cols: 3, rows: 1, color: this.chargeTierColumnColor },
+    { text: 'Character Count', cols: 5, rows: 1, color: this.charCountColumnColor},
+
+    { text: '1', cols: 2, rows: 1, color: this.priceTierColumnColor },
+    { text: this.tier1PriceString, cols: 3, rows: 1, color: this.chargeTierColumnColor },
+    { text: `First ${this.tierStructure.tier1.max} characters`, cols: 5, rows: 1, color: this.charCountColumnColor},
+
+    { text: '2', cols: 2, rows: 1, color: this.priceTierColumnColor },
+    { text: this.tier2PriceString, cols: 3, rows: 1, color: this.chargeTierColumnColor },
+    { text: `${this.tierStructure.tier1.max} ~ ${this.tierStructure.tier2.max} characters`, cols: 5, rows: 1, color: this.charCountColumnColor},
+
+    { text: '3', cols: 2, rows: 1, color: this.priceTierColumnColor },
+    { text: this.tier3PriceString, cols: 3, rows: 1, color: this.chargeTierColumnColor },
+    { text: `${this.tierStructure.tier2.max} characters +`, cols: 5, rows: 1, color: this.charCountColumnColor},
+  ];
+
+  private calculatedPricingStructureDisplay = [];
 
   ngOnInit() {
     this.characterCountForm = new FormGroup({
@@ -69,7 +87,7 @@ export class TechnicalComponent implements OnInit {
   }
 
   onSubmit() {
-    this.showTable = true;
+    this.showGrid = true;
     // getting the character count entered in form
     this.characterCountEntered = this.characterCountForm.value.characterCount;
     // call to populate this.calculatedPricingStructureDisplay with the character count
@@ -77,14 +95,34 @@ export class TechnicalComponent implements OnInit {
     // formatting char count with commas for sentence display
     this.characterCountEntered = this.convertToNumberWithCommas(this.characterCountEntered);
     // getting total price and formatting it to display in sentence
-    this.totalCharPrice = this.calculatedPricingStructureDisplay[3].price;
-    this.totalCharPriceString = this.l10nUSD.format(this.totalCharPrice / 100);
-    // setting the table's data:
-    this.dataSource = [
-      { tier: 'Tier 1', charCount: this.calculatedPricingStructureDisplay[2].chars, total: this.l10nUSD.format(this.calculatedPricingStructureDisplay[2].price / 100) },
-      { tier: 'Tier 2', charCount: this.calculatedPricingStructureDisplay[1].chars, total: this.l10nUSD.format(this.calculatedPricingStructureDisplay[1].price / 100) },
-      { tier: 'Tier 3', charCount: this.calculatedPricingStructureDisplay[0].chars, total: this.l10nUSD.format(this.calculatedPricingStructureDisplay[0].price / 100) },
-      { tier: 'Total', charCount: this.calculatedPricingStructureDisplay[3].chars, total: this.l10nUSD.format(this.calculatedPricingStructureDisplay[3].price / 100) }
+    this.totalCharPriceString = this.l10nUSD.format(this.calculatedPricingStructureDisplay[3].price / 100);
+    // setting the grid's data:
+    this.calculatedPriceTiles = [
+      
+      { text: 'Price Tier', cols: 3, rows: 1, color: this.priceTierColumnColor },
+      { text: 'Charge', cols: 3, rows: 1, color: this.chargeTierColumnColor },
+      { text: 'Character Count', cols: 3, rows: 1, color: this.charCountColumnColor},
+      { text: 'Tier Total', cols: 3, rows: 1, color: this.charCountColumnColor},
+  
+      { text: '1', cols: 3, rows: 1, color: this.priceTierColumnColor },
+      { text: this.tier1PriceString, cols: 3, rows: 1, color: this.chargeTierColumnColor },
+      { text: this.calculatedPricingStructureDisplay[2].chars, cols: 3, rows: 1, color: this.charCountColumnColor},
+      { text: this.l10nUSD.format(this.calculatedPricingStructureDisplay[2].price / 100), cols: 3, rows: 1, color: this.charCountColumnColor},
+  
+      { text: '2', cols: 3, rows: 1, color: this.priceTierColumnColor },
+      { text: this.tier2PriceString, cols: 3, rows: 1, color: this.chargeTierColumnColor },
+      { text: this.calculatedPricingStructureDisplay[1].chars, cols: 3, rows: 1, color: this.charCountColumnColor},
+      { text: this.l10nUSD.format(this.calculatedPricingStructureDisplay[1].price / 100), cols: 3, rows: 1, color: this.charCountColumnColor},
+  
+      { text: '3', cols: 3, rows: 1, color: this.priceTierColumnColor },
+      { text: this.tier3PriceString, cols: 3, rows: 1, color: this.chargeTierColumnColor },
+      { text: this.calculatedPricingStructureDisplay[0].chars, cols: 3, rows: 1, color: this.charCountColumnColor},
+      { text: this.l10nUSD.format(this.calculatedPricingStructureDisplay[0].price / 100), cols: 3, rows: 1, color: this.charCountColumnColor},
+
+      {text: 'Totals', cols: 3, rows: 1, color: this.gridHeadColor },
+      {text: '', cols: 3, rows: 1, color: this.gridHeadColor },
+      {text: this.calculatedPricingStructureDisplay[3].chars, cols: 3, rows: 1, color: this.gridHeadColor},
+      {text: this.l10nUSD.format(this.calculatedPricingStructureDisplay[3].price / 100), cols: 3, rows: 1, color: this.gridHeadColor}
     ];
   }
 
@@ -144,4 +182,5 @@ export class TechnicalComponent implements OnInit {
   convertToNumberWithCommas(n) {
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
+
 }

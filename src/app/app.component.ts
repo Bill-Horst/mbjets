@@ -12,5 +12,5 @@ export class AppComponent {
 
   private currentYear = new Date().getFullYear();
 
-  private copyrightMessage = `Copyright Bill Horst ${this.currentYear}`;
+  copyrightMessage = `Copyright Bill Horst ${this.currentYear}`;
 }

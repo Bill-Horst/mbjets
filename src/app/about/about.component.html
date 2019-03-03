@@ -1,22 +1,28 @@
+<h1 class="app-page-heading">{{ introHeader }}</h1>
+<hr />
+
 <section fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
-  <h1>{{ introHeader }}</h1>
-  <p>{{ introParagraph }}</p>
+  <!-- <p>{{ introParagraph }}</p> -->
   <div fxLayout.md="row wrap" fxLayout.lt-md="column" fxLayoutAlign="center center" fxLayoutGap="10px">
     <mat-card class="about-box">
-      <h1>Mayumi Horst</h1>
+      <h1>{{ mayumiName }}</h1>
       <img src="../../assets/images/mayumi_pic.JPG" />
-      <p>Mayumi was born and raised in Japan and had a very extensive English education. She became in English teacher
+      <!-- <p>Mayumi was born and raised in Japan and had a very extensive English education. She became in English teacher
         after college where she honed her English skills even more.</p>
       <p>She moved to the United States in 2015, where she's been living and working, continually improving her
-        English.</p>
+        English.</p> -->
+        <p>{{ mayIntroP1 }}</p>
+        <p>{{ mayIntroP2 }}</p>
     </mat-card>
     <mat-card class="about-box">
-      <h1>Bill Horst</h1>
+      <h1>{{ billName }}</h1>
       <img src="../../assets/images/bill_pic.JPG" />
-      <p>Bill was born and raised in the United States and grew up multilingual. On a whim, he moved to Japan and
+      <!-- <p>Bill was born and raised in the United States and grew up multilingual. On a whim, he moved to Japan and
         started studying Japanese, where he quickly improved and became a Japanese to English translator.</p>
       <p>He moved back to the United States in 2015 where he works as a software engineer and freelance Japanese to
-        English translator.</p>
+        English translator.</p> -->
+        <p>{{ billIntroP1 }}</p>
+        <p>{{ billIntroP2 }}</p>
     </mat-card>
   </div>
 </section>

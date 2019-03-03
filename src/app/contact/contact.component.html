@@ -1,9 +1,33 @@
+<h1 class="app-page-heading">Get In Touch!</h1>
+<hr />
 
 <section>
-  <h1>Contact Us</h1>
-  <p>Fill in the below info and hit 'Submit'</p>
-  <p>Give us your name (or company's name), email address, and leave some notes if you want.</p>
-  <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+  <div fxLayout.md="row wrap" fxLayout.lt-md="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+    <div class="contact-box">
+      <mat-icon>email</mat-icon>
+      <h1>Email</h1>
+      <p>bill@billhorst.com</p>
+    </div>
+    <div class="contact-box">
+      <mat-icon>place</mat-icon>
+      <h1>Address</h1>
+      <p>550 Sycamore Dr.</p>
+      <p>Windsor, CO 80550</p>
+    </div>
+    <div class="contact-box">
+      <mat-icon>phone</mat-icon>
+      <h1>Phone</h1>
+      <p>+1-719-651-4797</p>
+    </div>
+  </div>
+</section>
+
+
+
+
+  <!-- <p>Fill in the below info and hit 'Submit'</p>
+  <p>Give us your name (or company's name), email address, and leave some notes if you want.</p> -->
+  <!-- <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
     <mat-form-field>
       <input matInput type="text" placeholder="{{ namePlaceholder }}" formControlName="userName" />
       <mat-hint>{{ nameHint }}</mat-hint>
@@ -17,5 +41,6 @@
       <textarea matInput placeholder="{{ notesPlaceholder }}" formControlName="userNotes"></textarea>
     </mat-form-field>
     <button type="submit" mat-raised-button color="primary" [disabled]="contactForm.invalid">{{ submitButtonValue }}</button>
-  </form>
-</section>
+  </form> -->
+  <!-- for now, make the contact page look like the image here, later on, when I figure out how to add a form that will send me an email, ADD it to the page (don't replace the existing feature) -->
+  

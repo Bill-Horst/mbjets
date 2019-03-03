@@ -4,7 +4,8 @@
         <ul fxLayout fxLayoutGap="10px" class="navigation-items">
             <li><a routerLink="/contact">{{ contactNav }}</a></li>
             <li><a routerLink="/about">{{ aboutNav }}</a></li>
-            <li><a routerLink="/work">{{ workNav }}</a></li>
+            <!-- commented out route for work section - come back and add it back in if I ever want to display it again -->
+            <!-- <li><a routerLink="/work">{{ workNav }}</a></li> -->
             <li><a routerLink="/rates">{{ ratesNav }}</a></li>
             <li>
                 <a [matMenuTriggerFor]="language">Language/言語</a>
@@ -13,7 +14,8 @@
                     <button mat-menu-item (click)="newLanguageChosen('japanese')">日本語</button>
                 </mat-menu>
             </li>
-            <li><a routerLink="/thankyou">Test Thank You</a></li>
+            <!-- commented out thank you route because I don't have a contact form now -->
+            <!-- <li><a routerLink="/thankyou">Test Thank You</a></li> -->
         </ul>
     </div>
     <div fxHide.gt-xs fxFlex fxLayout fxLayoutAlign="flex-end">
