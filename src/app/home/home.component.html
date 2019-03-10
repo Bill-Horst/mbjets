@@ -1,28 +1,39 @@
-<h1 class="app-page-heading">Welcome to MBJETS</h1>
-<hr />
-
 <section fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
+  <div class="home-service-jumbotron">
+    <div class="home-service-jumbotron-text">
+      <h1>{{ homeHeader }}</h1>
+      <h1 *ngIf="language === 'english'"><span>{{ servicesHeaderTop }}</span><br /><span>{{ servicesHeaderBottom }}</span></h1>
+      <h1 *ngIf="language === 'japanese'"><span>{{ servicesHeaderTop }}</span><br /><span class="nowrap">{{servicesHeaderBottom }}</span></h1>
+      <mat-icon>done</mat-icon>
+      <span class="home-services-paragraph">{{ servicesP1 }}</span>
+      <br />
+      <mat-icon>done</mat-icon>
+      <span class="home-services-paragraph">{{ servicesP2 }}</span>
+      <br />
+      <mat-icon>done</mat-icon>
+      <span class="home-services-paragraph">{{ servicesP3 }}</span>
+    </div>
+  </div>
   <!-- <img src="../../assets/images/mbjets.jpg" /> -->
   <div fxLayout.md="row wrap" fxLayout.lt-md="column" fxLayoutAlign="center center" fxLayoutGap="10px">
     <mat-card class="home-box">
-      <h1>Twice the Experience</h1>
+      <h1>{{ expHeader }}</h1>
       <mat-icon>trending_up</mat-icon>
-      <p>Two experienced translators, one whose native language is the source and one whose native language is the
-        target.</p>
+      <p>{{ expP1 }}</p>
     </mat-card>
     <mat-card class="home-box">
-      <h1>High Quality</h1>
+      <h1>{{ hqHeader }}</h1>
       <mat-icon>high_quality</mat-icon>
-      <p>With two sets of eyes on every translation, two experienced translators get it done right.</p>
+      <p>{{ hqP1 }}</p>
     </mat-card>
     <mat-card class="home-box">
-      <h1>Fast Turn-around</h1>
+      <h1>{{ fastHeader }}</h1>
       <mat-icon>timer</mat-icon>
-      <p>Through the synergy of two humans collaborating on your translation, it gets done fast.</p>
+      <p>{{ fastP1 }}</p>
     </mat-card>
   </div>
   <div fxLayout fxLayoutAlign="center center" fxLayoutGap="30px">
-    <a routerLink="/contact"><button mat-button mat-raised-button color="accent">Contact Us</button></a>
-    <a routerLink="/rates"><button mat-button mat-raised-button color="accent">Check Rates</button></a>
+    <a routerLink="/contact"><button mat-button mat-raised-button color="accent">{{ contactButton }}</button></a>
+    <a routerLink="/rates"><button mat-button mat-raised-button color="accent">{{ checkRateButton }}</button></a>
   </div>
 </section>

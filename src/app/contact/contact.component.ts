@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { LanguageService } from '../services/language.service';
 
 @Component({
@@ -13,24 +11,14 @@ export class ContactComponent implements OnInit {
   private language: string = this.languageService.getLanguage();
   languageSubscription: any;
 
-  // namePlaceholder: string;
-  // emailPlaceholder: string;
-  // notesPlaceholder: string;
-  // submitButtonValue: string;
-  // nameHint: string;
-  // nameError: string;
-  // emailError: string;
+  contactHeader;
+  emailHeader;
+  addressHeader;
+  phoneHeader;
 
-  // contactForm: FormGroup;
-
-  constructor(private router: Router, private languageService: LanguageService) { }
+  constructor(private languageService: LanguageService) { }
 
   ngOnInit() {
-    // this.contactForm = new FormGroup({
-    //   userName: new FormControl('', {validators: [Validators.required]}),
-    //   userEmail: new FormControl('', {validators: [Validators.required, Validators.email]}),
-    //   userNotes: new FormControl('', {validators: []})
-    // });
     this.languageSubscription = this.languageService.triggerLanguageChange.subscribe((language: string) => {
       this.setTranslations(language);
     });
@@ -38,39 +26,29 @@ export class ContactComponent implements OnInit {
   }
 
   onSubmit() {
-    // this.router.navigate(['/thankyou']);
   }
 
   setTranslations(language: string) {
     let langTrans = this.translations[language];
 
-    // this.namePlaceholder = langTrans.namePlaceholder;
-    // this.emailPlaceholder = langTrans.emailPlaceholder;
-    // this.notesPlaceholder = langTrans.notesPlaceholder;
-    // this.submitButtonValue = langTrans.submitButtonValue;
-    // this.nameHint = langTrans.nameHint;
-    // this.nameError = langTrans.nameError;
-    // this.emailError = langTrans.emailError;
+    this.contactHeader = langTrans.contactHeader;
+    this.emailHeader = langTrans.emailHeader;
+    this.addressHeader = langTrans.addressHeader;
+    this.phoneHeader = langTrans.phoneHeader;
   }
 
   private translations: {} = {
     english: {
-      // namePlaceholder: 'Full name',
-      // emailPlaceholder: 'Email address',
-      // notesPlaceholder: 'Notes',
-      // submitButtonValue: 'Submit',
-      // nameHint: '(You or your company\'s name)',
-      // nameError: 'Missing name',
-      // emailError: 'Missing or invalid email'
+      contactHeader: 'Contact MBJETS',
+      emailHeader: 'Email',
+      addressHeader: 'Address',
+      phoneHeader: 'Phone'
     },
     japanese: {
-      // namePlaceholder: 'お名前',
-      // emailPlaceholder: 'メール',
-      // notesPlaceholder: 'ノート',
-      // submitButtonValue:　'ゴー',
-      // nameHint: 'お前か会社の名前',
-      // nameError: '名前ねーっし',
-      // emailError: 'メールないかメールめちゃくちゃだ'
+      contactHeader: 'MBJETSの連絡先',
+      emailHeader: 'メール',
+      addressHeader: '住所',
+      phoneHeader: '電話'
     }
   }
 

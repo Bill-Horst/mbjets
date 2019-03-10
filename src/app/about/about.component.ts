@@ -45,19 +45,19 @@ export class AboutComponent implements OnInit, OnDestroy {
       introHeader: 'Meet the Team',
       mayumiName: 'Mayumi',
       billName: 'Bill',
-      mayIntroP1: 'Mayumi was born and raised in Japan and had a very extensive English education. She became in English teacher after college where she honed her English skills even more.',
+      mayIntroP1: 'Mayumi was born and raised in Japan and had a very extensive English education. She became an English teacher after college where she learned by teaching.',
       mayIntroP2: 'She moved to the United States in 2015, where she\'s been living and working, continually improving her English.',
-      billIntroP1: 'Bill was born and raised in the United States and grew up multilingual. On a whim, he moved to Japan and started studying Japanese, where he quickly improved and became a Japanese to English translator.',
-      billIntroP2: 'He moved back to the United States in 2015 where he works as a software engineer and freelance Japanese to English translator.'
+      billIntroP1: 'Bill was born and raised in the United States and grew up multilingual. He moved to Japan in 2009 where he learned Japanese at work and began freelance translating professionally.',
+      billIntroP2: 'He moved back to the United States in 2015 where he works as a software engineer, a tech writer, and freelance Japanese to English translator.'
     },
     japanese: {
       introHeader: 'チームの紹介',
       mayumiName: 'まゆみ',
       billName: 'ビル',
-      mayIntroP1: 'JJJ Mayumi was born and raised in Japan and had a very extensive English education. She became in English teacher after college where she honed her English skills even more.',
-      mayIntroP2: 'JJJ She moved to the United States in 2015, where she\'s been living and working, continually improving her English.',
-      billIntroP1: 'JJJ Bill was born and raised in the United States and grew up multilingual. On a whim, he moved to Japan and started studying Japanese, where he quickly improved and became a Japanese to English translator.',
-      billIntroP2: 'JJJ He moved back to the United States in 2015 where he works as a software engineer and freelance Japanese to English translator.'
+      mayIntroP1: 'まゆみは日本で生まれ育ち、非常に幅広い英語教育を受けました。 彼女は大学卒業後、英語の教師になりました。',
+      mayIntroP2: '彼女は2015年にアメリカに引っ越しました。そこで彼女は生活し仕事をしていて、継続的に英語を上達させています。',
+      billIntroP1: 'ビルはアメリカで生まれ育ち、多言語で育ちました。 彼は2009年に日本に引っ越し、そこで職場で日本語を学び、プロとして翻訳を始めました。',
+      billIntroP2: '彼は2015年にアメリカに戻り、そこでソフトウェアエンジニア、テクニカルライター、そしてフリーランスの日本語から英語への翻訳者として働いています。'
     }
   }
 

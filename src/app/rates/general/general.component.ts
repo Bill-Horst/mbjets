@@ -1,14 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { LanguageService } from '../../services/language.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-general',
   templateUrl: './general.component.html',
   styleUrls: ['./general.component.css']
 })
-export class GeneralComponent implements OnInit {
+export class GeneralComponent implements OnInit, OnDestroy {
 
-  constructor() { }
+  private language: string = this.languageService.getLanguage();
+  languageSubscription: Subscription;
+
+  generalSubHeader;
+
+  constructor(private languageService: LanguageService) { }
 
   // the array of tiles for the calculated price
   private calculatedPriceTiles;
@@ -84,6 +91,10 @@ export class GeneralComponent implements OnInit {
     this.characterCountForm = new FormGroup({
       characterCount: new FormControl('', { validators: [Validators.required] })
     });
+    this.languageSubscription = this.languageService.triggerLanguageChange.subscribe((language: string) => {
+      this.setTranslations(language);
+    });
+    this.setTranslations(this.language);
   }
 
   onSubmit() {
@@ -181,6 +192,25 @@ export class GeneralComponent implements OnInit {
 
   convertToNumberWithCommas(n) {
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  setTranslations(language: string) {
+    let langTrans = this.translations[language];
+    
+    this.generalSubHeader = langTrans.generalSubHeader;
+  }
+
+  private translations: {} = {
+    english: {
+      generalSubHeader: 'General Translation Rates'
+    },
+    japanese: {
+      generalSubHeader: 'JJJ General Translation Rates'
+    }
+  }
+
+  ngOnDestroy() {
+    this.languageSubscription.unsubscribe();
   }
 
 }
