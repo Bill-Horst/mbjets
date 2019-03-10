@@ -13,9 +13,27 @@ export class GeneralComponent implements OnInit, OnDestroy {
   private language: string = this.languageService.getLanguage();
   languageSubscription: Subscription;
 
-  generalSubHeader;
+  tabSubHeader;
+  tabTableHeader;
+  priceTierTableHeader;
+  chargeTableHeader;
+  charCountTableHeader;
+  tierTotalTableHeader;
+  table_first;
+  table_characters;
+  estimateTitle;
+  estimateInstructions;
+  estimatePlaceholder;
+  table_totals;
+  total_estimateTitle;
+  total_for;
+  breakdownExplanation;
+  anotherEstimateDescription;
+  matErrorEnterCount;
 
   constructor(private languageService: LanguageService) { }
+
+  infoTiles = [];
 
   // the array of tiles for the calculated price
   private calculatedPriceTiles;
@@ -39,17 +57,17 @@ export class GeneralComponent implements OnInit, OnDestroy {
   private tierStructure = {
     tier1: {
       name: 'Tier 1',
-      price: 10,
+      price: 7,
       max: 1000
     },
     tier2: {
       name: 'Tier 2',
-      price: 8,
+      price: 5,
       max: 3000
     },
     tier3: {
       name: 'Tier 3',
-      price: 6,
+      price: 3,
       max: Infinity
     }
   }
@@ -65,26 +83,6 @@ export class GeneralComponent implements OnInit, OnDestroy {
   private chargeTierColumnColor: string = '#f2f7ff';
   private charCountColumnColor: string = '#f4f7ff';
 
-  infoTiles = [
-    { text: 'We don\'t usually do general translations, but when we do, here\'s what we charge:', cols: 10, rows: 1, color: this.gridHeadColor },
-
-    { text: 'Price Tier', cols: 2, rows: 1, color: this.priceTierColumnColor },
-    { text: 'Charge', cols: 3, rows: 1, color: this.chargeTierColumnColor },
-    { text: 'Character Count', cols: 5, rows: 1, color: this.charCountColumnColor},
-
-    { text: '1', cols: 2, rows: 1, color: this.priceTierColumnColor },
-    { text: this.tier1PriceString, cols: 3, rows: 1, color: this.chargeTierColumnColor },
-    { text: `First ${this.tierStructure.tier1.max} characters`, cols: 5, rows: 1, color: this.charCountColumnColor},
-
-    { text: '2', cols: 2, rows: 1, color: this.priceTierColumnColor },
-    { text: this.tier2PriceString, cols: 3, rows: 1, color: this.chargeTierColumnColor },
-    { text: `${this.tierStructure.tier1.max} ~ ${this.tierStructure.tier2.max} characters`, cols: 5, rows: 1, color: this.charCountColumnColor},
-
-    { text: '3', cols: 2, rows: 1, color: this.priceTierColumnColor },
-    { text: this.tier3PriceString, cols: 3, rows: 1, color: this.chargeTierColumnColor },
-    { text: `${this.tierStructure.tier2.max} characters +`, cols: 5, rows: 1, color: this.charCountColumnColor},
-  ];
-
   private calculatedPricingStructureDisplay = [];
 
   ngOnInit() {
@@ -93,8 +91,11 @@ export class GeneralComponent implements OnInit, OnDestroy {
     });
     this.languageSubscription = this.languageService.triggerLanguageChange.subscribe((language: string) => {
       this.setTranslations(language);
+      this.setInfoTiles();
+      this.setCalculatedPriceTiles();
     });
     this.setTranslations(this.language);
+    this.setInfoTiles();
   }
 
   onSubmit() {
@@ -108,33 +109,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
     // getting total price and formatting it to display in sentence
     this.totalCharPriceString = this.l10nUSD.format(this.calculatedPricingStructureDisplay[3].price / 100);
     // setting the grid's data:
-    this.calculatedPriceTiles = [
-      
-      { text: 'Price Tier', cols: 3, rows: 1, color: this.priceTierColumnColor },
-      { text: 'Charge', cols: 3, rows: 1, color: this.chargeTierColumnColor },
-      { text: 'Character Count', cols: 3, rows: 1, color: this.charCountColumnColor},
-      { text: 'Tier Total', cols: 3, rows: 1, color: this.charCountColumnColor},
-  
-      { text: '1', cols: 3, rows: 1, color: this.priceTierColumnColor },
-      { text: this.tier1PriceString, cols: 3, rows: 1, color: this.chargeTierColumnColor },
-      { text: this.calculatedPricingStructureDisplay[2].chars, cols: 3, rows: 1, color: this.charCountColumnColor},
-      { text: this.l10nUSD.format(this.calculatedPricingStructureDisplay[2].price / 100), cols: 3, rows: 1, color: this.charCountColumnColor},
-  
-      { text: '2', cols: 3, rows: 1, color: this.priceTierColumnColor },
-      { text: this.tier2PriceString, cols: 3, rows: 1, color: this.chargeTierColumnColor },
-      { text: this.calculatedPricingStructureDisplay[1].chars, cols: 3, rows: 1, color: this.charCountColumnColor},
-      { text: this.l10nUSD.format(this.calculatedPricingStructureDisplay[1].price / 100), cols: 3, rows: 1, color: this.charCountColumnColor},
-  
-      { text: '3', cols: 3, rows: 1, color: this.priceTierColumnColor },
-      { text: this.tier3PriceString, cols: 3, rows: 1, color: this.chargeTierColumnColor },
-      { text: this.calculatedPricingStructureDisplay[0].chars, cols: 3, rows: 1, color: this.charCountColumnColor},
-      { text: this.l10nUSD.format(this.calculatedPricingStructureDisplay[0].price / 100), cols: 3, rows: 1, color: this.charCountColumnColor},
-
-      {text: 'Totals', cols: 3, rows: 1, color: this.gridHeadColor },
-      {text: '', cols: 3, rows: 1, color: this.gridHeadColor },
-      {text: this.calculatedPricingStructureDisplay[3].chars, cols: 3, rows: 1, color: this.gridHeadColor},
-      {text: this.l10nUSD.format(this.calculatedPricingStructureDisplay[3].price / 100), cols: 3, rows: 1, color: this.gridHeadColor}
-    ];
+    this.setCalculatedPriceTiles();
   }
 
   //
@@ -196,17 +171,121 @@ export class GeneralComponent implements OnInit, OnDestroy {
 
   setTranslations(language: string) {
     let langTrans = this.translations[language];
-    
-    this.generalSubHeader = langTrans.generalSubHeader;
+
+    this.tabSubHeader = langTrans.tabSubHeader;
+    this.tabTableHeader = langTrans.tabTableHeader;
+    this.priceTierTableHeader = langTrans.priceTierTableHeader;
+    this.chargeTableHeader = langTrans.chargeTableHeader;
+    this.charCountTableHeader = langTrans.charCountTableHeader;
+    this.table_first = langTrans.table_first;
+    this.table_characters = langTrans.table_characters;
+    this.estimateTitle = langTrans.estimateTitle;
+    this.estimateInstructions = langTrans.estimateInstructions;
+    this.estimatePlaceholder = langTrans.estimatePlaceholder;
+    this.tierTotalTableHeader = langTrans.tierTotalTableHeader;
+    this.table_totals = langTrans.table_totals;
+    this.total_estimateTitle = langTrans.total_estimateTitle;
+    this.total_for = langTrans.total_for;
+    this.breakdownExplanation = langTrans.breakdownExplanation;
+    this.anotherEstimateDescription = langTrans.anotherEstimateDescription;
+    this.matErrorEnterCount = langTrans.matErrorEnterCount;
   }
 
   private translations: {} = {
     english: {
-      generalSubHeader: 'General Translation Rates'
+      tabSubHeader: 'General Translation Rates',
+      tabTableHeader: 'We don\'t usually do general translations, but when we do, here\'s what we charge:',
+      priceTierTableHeader: 'Price Tier',
+      chargeTableHeader: 'Charge',
+      charCountTableHeader: 'Character Count',
+      tierTotalTableHeader: 'Tier Total',
+      table_first: 'First',
+      table_characters: 'characters',
+      estimateTitle: 'Get an estimate:',
+      estimateInstructions: 'Enter the character count of your document below and hit submit to get an estimate.',
+      estimatePlaceholder: 'Character count',
+      table_totals: 'Totals:',
+      total_estimateTitle: 'Total estimate:',
+      total_for: 'for',
+      breakdownExplanation: 'Here\'s the breakdown:',
+      anotherEstimateDescription: 'Enter another character count and hit submit to get another estimate:',
+      matErrorEnterCount: 'Enter a number'
     },
     japanese: {
-      generalSubHeader: '普通の翻訳の値段'
+      tabSubHeader: '普通の翻訳の値段',
+      tabTableHeader: '普通は普通の翻訳をしないんだけど、やる時は値段はその下：',
+      priceTierTableHeader: 'プライスティアー',
+      chargeTableHeader: '値段',
+      charCountTableHeader: '文字数',
+      tierTotalTableHeader: 'ティアー合計',
+      table_first: '最初の',
+      table_characters: '文字',
+      estimateTitle: '値段の見当',
+      estimateInstructions: '文字数を入力して’Submit’をクリックしたら見当が出る',
+      estimatePlaceholder: '文字数',
+      table_totals: '合計：',
+      total_estimateTitle: '値段合計',
+      total_for: '',
+      breakdownExplanation: 'ブレイクダウン：',
+      anotherEstimateDescription: 'もう一の見当が欲しかったらもう一度文字数を入力してから’Submit’をクリックして下さい',
+      matErrorEnterCount: '数字を入力して'
     }
+  }
+
+  setInfoTiles() {
+    this.infoTiles = [
+      { text: this.tabTableHeader, cols: 10, rows: 1, color: this.gridHeadColor },
+
+      { text: this.priceTierTableHeader, cols: 2, rows: 1, color: this.priceTierColumnColor },
+      { text: this.chargeTableHeader, cols: 3, rows: 1, color: this.chargeTierColumnColor },
+      { text: this.charCountTableHeader, cols: 5, rows: 1, color: this.charCountColumnColor },
+
+      { text: '1', cols: 2, rows: 1, color: this.priceTierColumnColor },
+      { text: this.tier1PriceString, cols: 3, rows: 1, color: this.chargeTierColumnColor },
+      { text: `${this.table_first} ${this.tierStructure.tier1.max} ${this.table_characters}`, cols: 5, rows: 1, color: this.charCountColumnColor },
+
+      { text: '2', cols: 2, rows: 1, color: this.priceTierColumnColor },
+      { text: this.tier2PriceString, cols: 3, rows: 1, color: this.chargeTierColumnColor },
+      { text: `${this.tierStructure.tier1.max} ~ ${this.tierStructure.tier2.max} ${this.table_characters}`, cols: 5, rows: 1, color: this.charCountColumnColor },
+
+      { text: '3', cols: 2, rows: 1, color: this.priceTierColumnColor },
+      { text: this.tier3PriceString, cols: 3, rows: 1, color: this.chargeTierColumnColor },
+      { text: `${this.tierStructure.tier2.max} ${this.table_characters} +`, cols: 5, rows: 1, color: this.charCountColumnColor },
+    ];
+  }
+
+  setCalculatedPriceTiles() {
+    if (this.showGrid) {
+      this.calculatedPriceTiles = [
+
+        { text: this.priceTierTableHeader, cols: 3, rows: 1, color: this.priceTierColumnColor },
+        { text: this.chargeTableHeader, cols: 3, rows: 1, color: this.chargeTierColumnColor },
+        { text: this.charCountTableHeader, cols: 3, rows: 1, color: this.charCountColumnColor },
+        { text: this.tierTotalTableHeader, cols: 3, rows: 1, color: this.charCountColumnColor },
+
+        { text: '1', cols: 3, rows: 1, color: this.priceTierColumnColor },
+        { text: this.tier1PriceString, cols: 3, rows: 1, color: this.chargeTierColumnColor },
+        { text: this.calculatedPricingStructureDisplay[2].chars, cols: 3, rows: 1, color: this.charCountColumnColor },
+        { text: this.l10nUSD.format(this.calculatedPricingStructureDisplay[2].price / 100), cols: 3, rows: 1, color: this.charCountColumnColor },
+
+        { text: '2', cols: 3, rows: 1, color: this.priceTierColumnColor },
+        { text: this.tier2PriceString, cols: 3, rows: 1, color: this.chargeTierColumnColor },
+        { text: this.calculatedPricingStructureDisplay[1].chars, cols: 3, rows: 1, color: this.charCountColumnColor },
+        { text: this.l10nUSD.format(this.calculatedPricingStructureDisplay[1].price / 100), cols: 3, rows: 1, color: this.charCountColumnColor },
+
+        { text: '3', cols: 3, rows: 1, color: this.priceTierColumnColor },
+        { text: this.tier3PriceString, cols: 3, rows: 1, color: this.chargeTierColumnColor },
+        { text: this.calculatedPricingStructureDisplay[0].chars, cols: 3, rows: 1, color: this.charCountColumnColor },
+        { text: this.l10nUSD.format(this.calculatedPricingStructureDisplay[0].price / 100), cols: 3, rows: 1, color: this.charCountColumnColor },
+
+        { text: this.table_totals, cols: 3, rows: 1, color: this.gridHeadColor },
+        { text: '', cols: 3, rows: 1, color: this.gridHeadColor },
+        { text: this.calculatedPricingStructureDisplay[3].chars, cols: 3, rows: 1, color: this.gridHeadColor },
+        { text: this.l10nUSD.format(this.calculatedPricingStructureDisplay[3].price / 100), cols: 3, rows: 1, color: this.gridHeadColor }
+
+      ];
+    }
+
   }
 
   ngOnDestroy() {
