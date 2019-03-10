@@ -205,7 +205,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
       generalSubHeader: 'General Translation Rates'
     },
     japanese: {
-      generalSubHeader: 'JJJ General Translation Rates'
+      generalSubHeader: '普通の翻訳の値段'
     }
   }
 

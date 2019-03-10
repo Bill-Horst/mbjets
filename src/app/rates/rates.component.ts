@@ -41,9 +41,9 @@ export class RatesComponent implements OnInit, OnDestroy {
       technicalLabel: 'Technical Rates'
     },
     japanese: {
-      ratesHeader: 'JJJ Get an Estimate',
-      generalLabel: 'jjj General Rates',
-      technicalLabel: 'JJJ Technical Rates'
+      ratesHeader: '値段見当',
+      generalLabel: '普通の翻訳の値段',
+      technicalLabel: 'テックの値段'
     }
   }
 

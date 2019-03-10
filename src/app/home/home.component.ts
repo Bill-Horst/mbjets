@@ -9,7 +9,7 @@ import { LanguageService } from '../services/language.service';
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
-  private language: string = this.languageService.getLanguage();
+  language: string = this.languageService.getLanguage();
   languageSubscription: Subscription;
 
   homeHeader;
